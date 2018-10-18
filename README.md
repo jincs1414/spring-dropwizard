@@ -1,4 +1,5 @@
 # spring依赖容器与dropwizard的集成
+
 [![Build Status](https://travis-ci.com/jincs1414/spring-dropwizard.svg?branch=master)](https://travis-ci.org/jincs1414/spring-dropwizard)
 
 通过在dropwizard中集成spring framework，获取spring framework提供的依赖注入
