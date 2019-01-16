@@ -12,6 +12,12 @@
 对应的resource bean注册到dropwizard的运行环境中
 - 测试resource是否正常使用(http://127.0.0.1:8888/application/test/sayHello?name=1)
 
+### 备注
+
+- 运行服务时，通过运行参数配置，自定义配置文件`server dropwizard.yaml`
+
+- 调用`SpringDropwizardApplication.star()`运行服务
+
 
 ### 参考
 [dropwizard文档](https://www.dropwizard.io/1.3.5/docs/getting-started.html)

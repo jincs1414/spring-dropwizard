@@ -15,7 +15,7 @@ public class TestResourceTest {
 
     @org.junit.BeforeClass
     public static void beforeClass() throws Exception {
-        SpringDropwizardApplication.main(new String[]{"server","dropwizard.yaml"});
+        SpringDropwizardApplication.start(new String[]{"server","dropwizard.yaml"});
     }
 
     @org.junit.Test

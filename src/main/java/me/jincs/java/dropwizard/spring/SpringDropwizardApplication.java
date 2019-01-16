@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import javax.ws.rs.Path;
+import java.util.Arrays;
 
 /**
  * Created by jinchengsong on 2018/10/18.
@@ -15,6 +16,7 @@ import javax.ws.rs.Path;
 public class SpringDropwizardApplication  extends Application<DropwizardConfigure>
 {
 
+    private static final String BASE_COMMAND_ARG = "server dropwizard.yaml";
     private static ApplicationContext springContext;
     private static DropwizardConfigure dopwizardConfigure;
     private static Environment dropwizardEnvironment;
@@ -31,15 +33,25 @@ public class SpringDropwizardApplication  extends Application<DropwizardConfigur
         return dropwizardEnvironment;
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void start(String[] args)  {
         //创建spring容器，并注册bean
         springContext = new AnnotationConfigApplicationContext(SpringBeanConfigure.class);
         //创建dropwizard的运行环境
-        new SpringDropwizardApplication().run(args);
+        if(args == null || args.length == 0){
+            args = BASE_COMMAND_ARG.split(" ");
+        }
+        try {
+            new SpringDropwizardApplication().run(args);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("启动dropwizard服务失败");
+        }
     }
 
+
+
     @Override
-    public void run(DropwizardConfigure configure, Environment environment) throws Exception {
+     public void run(DropwizardConfigure configure, Environment environment) throws Exception {
         dopwizardConfigure = configure;
         dropwizardEnvironment = environment;
         registerResources(environment);
