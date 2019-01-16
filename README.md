@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/jincs1414/spring-dropwizard.svg?branch=master)](https://travis-ci.org/jincs1414/spring-dropwizard)
 
+[![maven model](https://jitpack.io/v/jincs1414/spring-dropwizard.svg)](https://jitpack.io/#jincs1414/spring-dropwizard)
+
 通过在dropwizard中集成spring framework，获取spring framework提供的依赖注入
 和bean生成功能，以及相应便捷的注解和包扫描功能
 
@@ -17,6 +19,15 @@
 - 运行服务时，通过运行参数配置，自定义配置文件`server dropwizard.yaml`
 
 - 调用`SpringDropwizardApplication.star()`运行服务
+
+- 采用 [https://jitpack.io](https://jitpack.io) 作为mavne模块的分发仓库
+```xml
+	<dependency>
+	    <groupId>com.github.jincs1414</groupId>
+	    <artifactId>spring-dropwizard</artifactId>
+	    <version>master-SNAPSHOT</version>
+	</dependency>
+```
 
 
 ### 参考
