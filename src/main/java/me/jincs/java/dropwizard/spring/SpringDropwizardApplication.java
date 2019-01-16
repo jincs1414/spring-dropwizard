@@ -1,6 +1,8 @@
 package me.jincs.java.dropwizard.spring;
 
 import io.dropwizard.Application;
+import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
+import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import me.jincs.java.dropwizard.spring.configure.DropwizardConfigure;
 import me.jincs.java.dropwizard.spring.configure.SpringBeanConfigure;
@@ -8,6 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import javax.ws.rs.Path;
+import java.io.File;
 import java.util.Arrays;
 
 /**
@@ -16,7 +19,8 @@ import java.util.Arrays;
 public class SpringDropwizardApplication  extends Application<DropwizardConfigure>
 {
 
-    private static final String BASE_COMMAND_ARG = "server dropwizard.yaml";
+    private static final String BASE_COMMAND_ARG = "server /me/jincs/java/dropwizard/spring/configure/dropwizard.yaml";
+    private static boolean USE_DEFAULT_CONFIGURE = false;
     private static ApplicationContext springContext;
     private static DropwizardConfigure dopwizardConfigure;
     private static Environment dropwizardEnvironment;
@@ -33,12 +37,17 @@ public class SpringDropwizardApplication  extends Application<DropwizardConfigur
         return dropwizardEnvironment;
     }
 
+    public static void main(String[] args) {
+        start(args);
+    }
     public static void start(String[] args)  {
         //创建spring容器，并注册bean
         springContext = new AnnotationConfigApplicationContext(SpringBeanConfigure.class);
         //创建dropwizard的运行环境
+        //默认配置
         if(args == null || args.length == 0){
             args = BASE_COMMAND_ARG.split(" ");
+            USE_DEFAULT_CONFIGURE = true;
         }
         try {
             new SpringDropwizardApplication().run(args);
@@ -55,6 +64,18 @@ public class SpringDropwizardApplication  extends Application<DropwizardConfigur
         dopwizardConfigure = configure;
         dropwizardEnvironment = environment;
         registerResources(environment);
+    }
+
+    /**
+     * 初始化环境配置
+     * @param bootstrap
+     */
+    @Override
+    public void initialize(Bootstrap<DropwizardConfigure> bootstrap) {
+        if(USE_DEFAULT_CONFIGURE){
+            bootstrap.setConfigurationSourceProvider(new ResourceConfigurationSourceProvider());
+        }
+        super.initialize(bootstrap);
     }
 
     /**
