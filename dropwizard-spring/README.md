@@ -18,6 +18,8 @@
 
 - 运行服务时，通过运行参数配置，自定义配置文件`server dropwizard.yaml`
 
+  - dropwizard.yaml放在`resources`里面替换掉默认的配置
+
 - 调用`SpringDropwizardApplication.star()`运行服务
 
 - 采用 [https://jitpack.io](https://jitpack.io) 作为mavne模块的分发仓库
