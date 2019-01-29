@@ -1,6 +1,6 @@
-package me.jincs.java.dropwizard.spring.resources;
-
+import me.jincs.java.dropwizard.configure.DropwizardConfig;
 import me.jincs.java.dropwizard.spring.SpringDropwizardApplication;
+import me.jincs.java.dropwizard.spring.configure.SpringConfigure;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -15,7 +15,19 @@ public class TestResourceTest {
 
     @org.junit.BeforeClass
     public static void beforeClass() throws Exception {
-        SpringDropwizardApplication.start(new String[]{"server","dropwizard.yaml"});
+        SpringDropwizardApplication.start(
+                new DropwizardConfig() {
+                    @Override
+                    public SpringConfigure getSpringConfig() {
+                        return null;
+                    }
+
+                    @Override
+                    public String[] getDropwizardConfig() {
+                        return new String[]{"server", "dropwizard.yaml"};
+                    }
+                }
+        );
     }
 
     @org.junit.Test
